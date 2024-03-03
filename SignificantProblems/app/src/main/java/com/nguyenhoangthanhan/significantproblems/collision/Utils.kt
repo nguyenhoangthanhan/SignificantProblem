@@ -2,7 +2,10 @@ package com.nguyenhoangthanhan.significantproblems.collision
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.PointF
 import android.graphics.RectF
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 fun areColliding(rect: RectF, x: Float, y: Float): Boolean =
@@ -30,7 +33,26 @@ fun intersectCircleAndRectangular(circle: Circle, rect: RectF): Boolean {
     if (yDistance <= halfHeight) return true
 
     //if rect.contains(circle.x, circle.y) return true
-    val cornerDistance_sq = sqrt((xDistance - rect.width() / 2) * (xDistance - rect.width() / 2) +
-            (yDistance - rect.height() / 2) * (yDistance - rect.height() / 2))
+    val cornerDistance_sq = sqrt(
+        (xDistance - rect.width() / 2) * (xDistance - rect.width() / 2) +
+                (yDistance - rect.height() / 2) * (yDistance - rect.height() / 2)
+    )
     return cornerDistance_sq <= circle.r
 }
+
+fun Canvas.drawLine(line: Line, paint: Paint) =
+    line.run {
+        drawLine(start.x, start.y, end.x, end.y, paint)
+    }
+
+fun PointF.isInDistanceOf(x: Float, y: Float, maxDistance: Float): Boolean{
+    val xDistance = this.x - x // x - this.x
+    val yDistance = this.y - y
+
+    val squaredDistance = xDistance * xDistance + yDistance * yDistance
+
+    return squaredDistance <= maxDistance * maxDistance
+}
+
+fun Float.isBetween(num1: Float, num2: Float) =
+    min(num1, num2) <= this && this <= max(num1, num2)
