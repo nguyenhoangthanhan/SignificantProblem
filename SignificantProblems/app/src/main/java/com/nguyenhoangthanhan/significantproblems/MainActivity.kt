@@ -13,6 +13,6 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(CustomView(this))
-        setContentView(CustomViewLineLine(this))
+        setContentView(R.layout.activity_main)
     }
 }
